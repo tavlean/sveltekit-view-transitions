@@ -1,29 +1,24 @@
 <script lang="ts">
-	import ViewTransition from './navigation.svelte'
-	import Header from './header.svelte'
-	import '../app.css'
-	interface Props {
-		children?: import('svelte').Snippet;
-	}
+    import ViewTransition from "./navigation.svelte";
+    import Header from "./header.svelte";
+    import "../app.css";
 
-	let { children }: Props = $props();
+    const { children } = $props();
 </script>
 
 <svelte:head>
-	<title>Planets</title>
+    <title>Planets</title>
 </svelte:head>
 
 <div class="app">
-	<ViewTransition />
-	<Header />
+    <ViewTransition />
+    <Header />
 
-	<main>
-		{@render children?.()}
-	</main>
+    <main>{@render children?.()}</main>
 </div>
 
 <style>
-	.app {
-		padding-block: 2rem;
-	}
+    .app {
+        padding-block: 2rem;
+    }
 </style>
