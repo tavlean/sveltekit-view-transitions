@@ -3,7 +3,7 @@
 	import { tweened } from 'svelte/motion'
 	import { formatNumber } from '$lib/utils'
 
-	export let data
+	let { data } = $props();
 
 	const defaults = { duration: 4000 }
 	const moons = tweened(0, defaults)
@@ -16,7 +16,7 @@
 		$comets = 3_885
 	})
 
-	$: planets = data.planets
+	let planets = $derived(data.planets)
 </script>
 
 <div class="container">

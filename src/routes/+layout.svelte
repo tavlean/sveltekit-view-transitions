@@ -2,6 +2,11 @@
 	import ViewTransition from './navigation.svelte'
 	import Header from './header.svelte'
 	import '../app.css'
+	interface Props {
+		children?: import('svelte').Snippet;
+	}
+
+	let { children }: Props = $props();
 </script>
 
 <svelte:head>
@@ -13,7 +18,7 @@
 	<Header />
 
 	<main>
-		<slot />
+		{@render children?.()}
 	</main>
 </div>
 
