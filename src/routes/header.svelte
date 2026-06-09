@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { page } from '$app/stores'
+	import { page } from '$app/state'
 
 	const paths = [
 		{ name: 'Planets', path: '/' },
@@ -12,7 +12,7 @@
 <header>
 	<nav class="links">
 		{#each paths as { name, path }}
-			{@const active = $page.url.pathname === path ? 'page' : null}
+			{@const active = page.url.pathname === path ? 'page' : null}
 			<a aria-current={active} href={path}>{name}</a>
 		{/each}
 	</nav>

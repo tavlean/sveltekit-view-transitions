@@ -3,15 +3,13 @@
 	import CheckIcon from './check.svelte'
 
 	type State = 'idle' | 'loading' | 'success' | 'error'
-	let state: State = 'idle'
+	let state = $state<State>('idle')
 
 	function transition(action: () => void) {
-		// @ts-ignore
 		if (!document.startViewTransition) {
 			action()
 			return
 		}
-		// @ts-ignore
 		document.startViewTransition(action)
 	}
 
@@ -20,15 +18,13 @@
 
 		transition(() => (state = 'loading'))
 
-		Math.random() > 0.5
-			? setTimeout(() => transition(() => (state = 'success')), 2000)
-			: setTimeout(() => transition(() => (state = 'error')), 2000)
-
+		const result: State = Math.random() > 0.5 ? 'success' : 'error'
+		setTimeout(() => transition(() => (state = result)), 2000)
 		setTimeout(() => transition(() => (state = 'idle')), 3000)
 	}
 </script>
 
-<button on:click={makeReservation} data-state={state}>
+<button onclick={makeReservation} data-state={state}>
 	{#if state === 'idle'}
 		Make reservation
 	{:else if state === 'loading'}

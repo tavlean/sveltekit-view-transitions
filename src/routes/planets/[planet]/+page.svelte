@@ -1,11 +1,14 @@
 <script lang="ts">
-	import { page } from '$app/stores'
+	import { page } from '$app/state'
 	import MakeReservation from './button.svelte'
+	import type { PageData } from './$types'
 
-	export let data
+	let { data }: { data: PageData } = $props()
 
-	$: planet = data.planets.find(
-		(planet) => $page.params.planet.toLowerCase() === planet.name.toLowerCase()
+	const planet = $derived(
+		data.planets.find(
+			(planet) => planet.name.toLowerCase() === page.params.planet?.toLowerCase()
+		)
 	)
 </script>
 

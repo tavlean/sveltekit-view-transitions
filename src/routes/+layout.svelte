@@ -1,7 +1,10 @@
 <script lang="ts">
+	import type { Snippet } from 'svelte'
 	import ViewTransition from './navigation.svelte'
 	import Header from './header.svelte'
 	import '../app.css'
+
+	let { children }: { children: Snippet } = $props()
 </script>
 
 <svelte:head>
@@ -13,7 +16,7 @@
 	<Header />
 
 	<main>
-		<slot />
+		{@render children()}
 	</main>
 </div>
 

@@ -1,22 +1,21 @@
 <script lang="ts">
 	import { onMount } from 'svelte'
-	import { tweened } from 'svelte/motion'
+	import { Tween } from 'svelte/motion'
 	import { formatNumber } from '$lib/utils'
+	import type { PageData } from './$types'
 
-	export let data
+	let { data }: { data: PageData } = $props()
 
-	const defaults = { duration: 4000 }
-	const moons = tweened(0, defaults)
-	const asteroids = tweened(0, defaults)
-	const comets = tweened(0, defaults)
+	const options = { duration: 4000 }
+	const moons = new Tween(0, options)
+	const asteroids = new Tween(0, options)
+	const comets = new Tween(0, options)
 
 	onMount(() => {
-		$moons = 200
-		$asteroids = 1_303_348
-		$comets = 3_885
+		moons.target = 200
+		asteroids.target = 1_303_348
+		comets.target = 3_885
 	})
-
-	$: planets = data.planets
 </script>
 
 <div class="container">
@@ -25,22 +24,22 @@
 	<div class="details">
 		<div class="item">
 			<div>Moons</div>
-			<div>{formatNumber($moons)}+</div>
+			<div>{formatNumber(moons.current)}+</div>
 		</div>
 
 		<div class="item">
 			<div>Asteroids</div>
-			<div>{formatNumber($asteroids)}</div>
+			<div>{formatNumber(asteroids.current)}</div>
 		</div>
 
 		<div class="item">
 			<div>Comets</div>
-			<div>{formatNumber($comets)}</div>
+			<div>{formatNumber(comets.current)}</div>
 		</div>
 	</div>
 
 	<div class="planets">
-		{#each planets as { name, image }}
+		{#each data.planets as { name, image }}
 			<a href="planets/{name.toLowerCase()}" class="planet">
 				<img src={image} alt={name} style:--planet="image-{name}" />
 				<h2 style:--title="title-{name}">{name}</h2>
